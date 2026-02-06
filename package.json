@@ -1,0 +1,32 @@
+{
+  "name": "concert-notify",
+  "version": "2.0.0",
+  "description": "Discover upcoming concerts for artists you listen to on Spotify",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "NODE_ENV=development node src/server.js",
+    "scrape": "node src/scraper/index.js",
+    "scrape:dry": "node src/scraper/index.js --dry-run",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
+    "puppeteer": "^24.7.2"
+  },
+  "keywords": [
+    "spotify",
+    "concerts",
+    "music",
+    "events",
+    "scraper"
+  ],
+  "license": "MIT"
+}

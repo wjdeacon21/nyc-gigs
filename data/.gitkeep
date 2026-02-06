@@ -1,0 +1,3 @@
+# This directory holds scraped show data.
+# shows.json is the primary data file read by the web app.
+# Run `npm run scrape` to populate it.

@@ -1,0 +1,200 @@
+/**
+ * Spotify API client.
+ * Handles all interactions with the Spotify Web API.
+ */
+
+const axios = require('axios');
+const querystring = require('querystring');
+const { config } = require('../config');
+const { encodeClientCredentials, logger } = require('../utils');
+const tokenStore = require('./tokenStore');
+
+const authHeader = {
+  Authorization: `Basic ${encodeClientCredentials(config.spotify.clientId, config.spotify.clientSecret)}`,
+  'Content-Type': 'application/x-www-form-urlencoded',
+};
+
+/**
+ * Exchange an authorization code for access and refresh tokens.
+ * @param {string} code - Authorization code from OAuth callback
+ * @returns {Promise<Object>} Token response from Spotify
+ */
+async function exchangeCodeForTokens(code) {
+  const response = await axios.post(
+    config.spotify.tokenUrl,
+    querystring.stringify({
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: config.spotify.redirectUri,
+    }),
+    { headers: authHeader }
+  );
+  return response.data;
+}
+
+/**
+ * Refresh an expired access token.
+ * @param {string} refreshToken - Spotify refresh token
+ * @returns {Promise<Object>} New token data
+ */
+async function refreshAccessToken(refreshToken) {
+  const response = await axios.post(
+    config.spotify.tokenUrl,
+    querystring.stringify({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    }),
+    { headers: authHeader }
+  );
+  return response.data;
+}
+
+/**
+ * Ensures the user has a valid (non-expired) access token.
+ * Automatically refreshes if needed.
+ * @param {string} userId - Session identifier
+ * @returns {Promise<string>} Valid access token
+ * @throws {Error} If user not found or refresh fails
+ */
+async function ensureValidToken(userId) {
+  const userToken = tokenStore.get(userId);
+
+  if (!userToken) {
+    throw new Error('User not authenticated');
+  }
+
+  if (tokenStore.isExpired(userId)) {
+    logger.debug('Token expired, refreshing', { userId });
+    try {
+      const data = await refreshAccessToken(userToken.refreshToken);
+      tokenStore.updateAccessToken(userId, data.access_token, data.expires_in);
+      return data.access_token;
+    } catch (error) {
+      logger.error('Token refresh failed', { userId, error: error.message });
+      throw new Error('Failed to refresh token');
+    }
+  }
+
+  return userToken.accessToken;
+}
+
+/**
+ * Make an authenticated request to the Spotify API.
+ * @param {string} endpoint - API endpoint (relative to base URL)
+ * @param {string} accessToken - Valid access token
+ * @param {Object} [options] - Axios request options
+ * @returns {Promise<Object>} API response data
+ */
+async function apiRequest(endpoint, accessToken, options = {}) {
+  const url = endpoint.startsWith('http') ? endpoint : `${config.spotify.apiBaseUrl}${endpoint}`;
+
+  const response = await axios({
+    url,
+    ...options,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      ...options.headers,
+    },
+  });
+
+  return response.data;
+}
+
+/**
+ * Get the current user's profile.
+ * @param {string} accessToken - Valid access token
+ * @returns {Promise<Object>} User profile data
+ */
+async function getCurrentUser(accessToken) {
+  return apiRequest('/me', accessToken);
+}
+
+/**
+ * Get the user's top artists.
+ * @param {string} userId - Session identifier
+ * @param {number} [limit=50] - Number of artists to fetch (max 50)
+ * @returns {Promise<Array>} Array of artist objects
+ */
+async function getTopArtists(userId, limit = 50) {
+  const accessToken = await ensureValidToken(userId);
+  const data = await apiRequest(`/me/top/artists?limit=${limit}`, accessToken);
+
+  return data.items.map(artist => ({
+    name: artist.name,
+    image: artist.images[0]?.url,
+    genres: artist.genres,
+    url: artist.external_urls.spotify,
+  }));
+}
+
+/**
+ * Get all unique artists from the user's liked songs.
+ * Handles pagination automatically.
+ * @param {string} userId - Session identifier
+ * @returns {Promise<Array>} Array of unique artist objects
+ */
+async function getLikedArtists(userId) {
+  const accessToken = await ensureValidToken(userId);
+  const artistsSet = new Set();
+  let nextUrl = '/me/tracks?limit=50';
+
+  while (nextUrl) {
+    const data = await apiRequest(nextUrl, accessToken);
+
+    for (const item of data.items) {
+      for (const artist of item.track.artists) {
+        artistsSet.add(JSON.stringify({
+          name: artist.name,
+          url: artist.external_urls.spotify,
+        }));
+      }
+    }
+
+    nextUrl = data.next;
+  }
+
+  return Array.from(artistsSet).map(JSON.parse);
+}
+
+/**
+ * Search for an artist and get their top track.
+ * @param {string} userId - Session identifier
+ * @param {string} artistName - Artist name to search
+ * @returns {Promise<Object>} Top track info
+ */
+async function searchArtistTopTrack(userId, artistName) {
+  const accessToken = await ensureValidToken(userId);
+
+  const searchData = await apiRequest(
+    `/search?q=${encodeURIComponent(artistName)}&type=artist&limit=1`,
+    accessToken
+  );
+
+  const artistId = searchData.artists.items[0]?.id;
+  if (!artistId) {
+    throw new Error('Artist not found');
+  }
+
+  const tracksData = await apiRequest(`/artists/${artistId}/top-tracks?market=US`, accessToken);
+  const topTrack = tracksData.tracks[0];
+
+  if (!topTrack) {
+    throw new Error('No tracks found for this artist');
+  }
+
+  return {
+    songName: topTrack.name,
+    artistName: topTrack.artists[0].name,
+    albumCover: topTrack.album.images[0]?.url,
+  };
+}
+
+module.exports = {
+  exchangeCodeForTokens,
+  refreshAccessToken,
+  ensureValidToken,
+  getCurrentUser,
+  getTopArtists,
+  getLikedArtists,
+  searchArtistTopTrack,
+};
