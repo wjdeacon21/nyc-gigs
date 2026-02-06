@@ -20,6 +20,11 @@
     loading: document.getElementById('loading'),
     username: document.getElementById('username'),
     matchesList: document.getElementById('matchesList'),
+    calendarContainer: document.getElementById('calendarContainer'),
+    calendarView: document.getElementById('calendarView'),
+    calendarTitle: document.getElementById('calendarTitle'),
+    calendarPrev: document.getElementById('calendarPrev'),
+    calendarNext: document.getElementById('calendarNext'),
   };
 
   // Application state
@@ -29,6 +34,9 @@
     refreshToken: null,
     expiresAt: null,
     username: null,
+    // Calendar state
+    calendarWeekOffset: 0,
+    calendarMatches: [],
   };
 
   // Storage keys
@@ -281,6 +289,7 @@
   }
 
   function renderMatches(matches) {
+    // Render list view
     if (matches.length === 0) {
       elements.matchesList.innerHTML = `
         <div class="empty-state">
@@ -288,20 +297,99 @@
           <p>Check back later for new announcements!</p>
         </div>
       `;
+    } else {
+      elements.matchesList.innerHTML = matches.map(show => {
+        return `
+          <div class="show-card">
+            <div class="show-card__artists">${escapeHtml(show.artists.join(', '))}</div>
+            <div class="show-card__details">
+              <div class="show-card__date">${escapeHtml(show.date)} at ${escapeHtml(show.time)}</div>
+              <div class="show-card__venue">${escapeHtml(show.venue)}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render calendar view
+    renderCalendar(matches);
+  }
+
+  /**
+   * Renders the weekly calendar view with matched shows.
+   */
+  function renderCalendar(matches) {
+    if (!elements.calendarContainer || !elements.calendarView) {
       return;
     }
 
-    elements.matchesList.innerHTML = matches.map(show => {
-      return `
-        <div class="show-card">
-          <div class="show-card__artists">${escapeHtml(show.artists.join(', '))}</div>
-          <div class="show-card__details">
-            <div class="show-card__date">${escapeHtml(show.date)} at ${escapeHtml(show.time)}</div>
-            <div class="show-card__venue">${escapeHtml(show.venue)}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
+    // Store matches for navigation
+    state.calendarMatches = matches;
+
+    // Render with current offset
+    updateCalendarView();
+
+    // Show calendar container
+    elements.calendarContainer.style.display = 'block';
+  }
+
+  /**
+   * Updates the calendar view based on current week offset.
+   */
+  function updateCalendarView() {
+    const weekData = WeeklyShows.getWeekByOffset(state.calendarMatches, state.calendarWeekOffset);
+
+    // Render calendar grid
+    WeeklyCalendar.render(weekData, elements.calendarView);
+
+    // Update title
+    if (elements.calendarTitle) {
+      elements.calendarTitle.textContent = getWeekTitle(weekData, state.calendarWeekOffset);
+    }
+  }
+
+  /**
+   * Generates a human-readable title for the week.
+   */
+  function getWeekTitle(weekData, offset) {
+    if (offset === 0) {
+      return 'This Week';
+    } else if (offset === 1) {
+      return 'Next Week';
+    } else if (offset === -1) {
+      return 'Last Week';
+    }
+
+    // Format as date range: "Feb 9 - 15"
+    const start = weekData.weekStartDate;
+    const end = weekData.weekEndDate;
+
+    const startMonth = start.toLocaleDateString('en-US', { month: 'short' });
+    const startDay = start.getDate();
+    const endMonth = end.toLocaleDateString('en-US', { month: 'short' });
+    const endDay = end.getDate();
+
+    if (startMonth === endMonth) {
+      return `${startMonth} ${startDay} - ${endDay}`;
+    } else {
+      return `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
+    }
+  }
+
+  /**
+   * Navigate to previous week.
+   */
+  function calendarPrevWeek() {
+    state.calendarWeekOffset--;
+    updateCalendarView();
+  }
+
+  /**
+   * Navigate to next week.
+   */
+  function calendarNextWeek() {
+    state.calendarWeekOffset++;
+    updateCalendarView();
   }
 
   // Prevent XSS when rendering user-controlled data
@@ -315,6 +403,15 @@
   document.addEventListener('DOMContentLoaded', () => {
     elements.loginButton.addEventListener('click', auth.login);
     elements.logoutButton.addEventListener('click', auth.logout);
+
+    // Calendar navigation
+    if (elements.calendarPrev) {
+      elements.calendarPrev.addEventListener('click', calendarPrevWeek);
+    }
+    if (elements.calendarNext) {
+      elements.calendarNext.addEventListener('click', calendarNextWeek);
+    }
+
     auth.init();
   });
 })();

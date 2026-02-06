@@ -70,7 +70,10 @@ async function loadFromLocalFile() {
   const localPath = path.resolve(config.shows.localPath);
 
   try {
-    if (!fs.existsSync(localPath)) {
+    // Use async access check instead of blocking existsSync
+    try {
+      await fs.promises.access(localPath, fs.constants.R_OK);
+    } catch {
       logger.debug('Local shows file not found', { path: localPath });
       return null;
     }

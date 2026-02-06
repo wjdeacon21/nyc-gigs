@@ -275,6 +275,194 @@ h2 {
   }
 }
 
+/* ==========================================================================
+   WEEKLY CALENDAR - Layout Skeleton
+   Desktop-only, structural styles. Visual polish to be added later.
+   ========================================================================== */
+
+/* Calendar container - matches artists-column styling for consistency */
+.calendar-container {
+  background: #1a1a1a;
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Calendar header with navigation */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.calendar-header h2 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  flex: 1;
+  text-align: center;
+}
+
+.calendar-nav {
+  background: transparent;
+  border: 1px solid var(--color-text-secondary);
+  color: var(--color-text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.calendar-nav:hover {
+  background: var(--color-surface-light);
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.calendar-nav:active {
+  transform: scale(0.95);
+}
+
+/*
+ * LAYOUT DECISION: CSS Grid for the 7-column structure.
+ * - Grid provides equal-width columns with minimal code
+ * - Columns auto-expand vertically based on content
+ * - Gap property handles consistent spacing
+ */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px; /* Thin gaps - styled later */
+  background: var(--color-surface-light); /* Gap color shows through */
+  border-radius: var(--border-radius-md);
+  overflow: hidden; /* Contain rounded corners */
+}
+
+/*
+ * DAY COLUMN: Vertical flex container
+ * - Header stays at top
+ * - Shows area fills remaining space and scrolls if needed
+ */
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  min-height: 300px; /* Ensures consistent height even when empty */
+}
+
+/* Today column - subtle visual distinction */
+.calendar-day[data-is-today="true"] {
+  background: #1a2f1a; /* Slightly tinted to indicate "today" */
+}
+
+/* Past days - slightly muted */
+.calendar-day[data-is-past="true"] {
+  opacity: 0.7;
+}
+
+/*
+ * DAY HEADER: Fixed at top of each column
+ * Contains day name and numeric date
+ */
+.calendar-day__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--color-surface-light);
+  flex-shrink: 0; /* Don't compress header */
+}
+
+.calendar-day__name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calendar-day__date {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 0.25rem;
+}
+
+/* Today's date - highlight */
+.calendar-day[data-is-today="true"] .calendar-day__date {
+  color: var(--color-primary);
+}
+
+/*
+ * SHOWS AREA: Scrollable container for show cards
+ * - Flex-grow to fill available column height
+ * - Overflow-y for days with many shows
+ */
+.calendar-day__shows {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+/* Empty state placeholder */
+.calendar-day__empty {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  font-style: italic;
+}
+
+/*
+ * SHOW CARD: Individual show block
+ * Compact layout for calendar grid context
+ */
+.calendar-show {
+  background: var(--color-surface-light);
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.calendar-show__artist {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+  /* Truncate long artist names in narrow columns */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-show__venue {
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-show__time {
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   END WEEKLY CALENDAR
+   ========================================================================== */
+
 /* Responsive */
 @media (max-width: 600px) {
   .container {

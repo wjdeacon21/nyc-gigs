@@ -87,7 +87,7 @@ async function scrapePage(page, pageNum) {
 }
 
 /**
- * Main scraper function. Scrapes all configured pages.
+ * Main scraper function. Scrapes all configured pages in parallel.
  * @returns {Promise<Array>} All scraped and validated shows
  */
 async function scrape() {
@@ -102,27 +102,43 @@ async function scrape() {
   });
 
   const allShows = [];
+  const CONCURRENT_PAGES = 3; // Scrape 3 pages at a time
 
   try {
-    const page = await browser.newPage();
+    const pageNumbers = [];
+    for (let i = config.startPage; i <= config.endPage; i++) {
+      pageNumbers.push(i);
+    }
 
-    // Set a reasonable user agent
-    await page.setUserAgent(
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-    );
+    // Process pages in batches for parallel scraping
+    for (let i = 0; i < pageNumbers.length; i += CONCURRENT_PAGES) {
+      const batch = pageNumbers.slice(i, i + CONCURRENT_PAGES);
 
-    for (let pageNum = config.startPage; pageNum <= config.endPage; pageNum++) {
-      try {
-        const pageShows = await scrapePage(page, pageNum);
-        allShows.push(...pageShows);
+      const batchPromises = batch.map(async (pageNum) => {
+        const page = await browser.newPage();
+        await page.setUserAgent(
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+        );
 
-        // Rate limiting between pages
-        if (pageNum < config.endPage) {
-          await new Promise(r => setTimeout(r, config.delayBetweenPages));
+        try {
+          const pageShows = await scrapePage(page, pageNum);
+          return pageShows;
+        } catch (error) {
+          logger.error(`Failed to scrape page ${pageNum}`, { error: error.message });
+          return [];
+        } finally {
+          await page.close();
         }
-      } catch (error) {
-        logger.error(`Failed to scrape page ${pageNum}`, { error: error.message });
-        // Continue with other pages
+      });
+
+      const batchResults = await Promise.all(batchPromises);
+      for (const shows of batchResults) {
+        allShows.push(...shows);
+      }
+
+      // Small delay between batches to be polite to the server
+      if (i + CONCURRENT_PAGES < pageNumbers.length) {
+        await new Promise(r => setTimeout(r, 500));
       }
     }
   } finally {
@@ -150,10 +166,8 @@ async function scrape() {
 async function saveShows(shows, { keepHistory = false } = {}) {
   const outputDir = path.resolve(config.output.directory);
 
-  // Ensure directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
+  // Ensure directory exists (async)
+  await fs.promises.mkdir(outputDir, { recursive: true });
 
   // Always save to latest file
   const latestPath = path.join(outputDir, config.output.latestFilename);
@@ -176,7 +190,9 @@ async function saveShows(shows, { keepHistory = false } = {}) {
 async function loadShows() {
   const filePath = path.resolve(config.output.directory, config.output.latestFilename);
 
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fs.promises.access(filePath, fs.constants.R_OK);
+  } catch {
     logger.warn('No shows file found', { path: filePath });
     return [];
   }

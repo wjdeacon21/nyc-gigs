@@ -14,6 +14,23 @@ const authHeader = {
   'Content-Type': 'application/x-www-form-urlencoded',
 };
 
+// Simple in-memory cache for API responses
+const apiCache = new Map();
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+function getCached(key) {
+  const entry = apiCache.get(key);
+  if (entry && Date.now() - entry.timestamp < CACHE_TTL_MS) {
+    return entry.data;
+  }
+  apiCache.delete(key);
+  return null;
+}
+
+function setCache(key, data) {
+  apiCache.set(key, { data, timestamp: Date.now() });
+}
+
 /**
  * Exchange an authorization code for access and refresh tokens.
  * @param {string} code - Authorization code from OAuth callback
@@ -116,44 +133,71 @@ async function getCurrentUser(accessToken) {
  * @returns {Promise<Array>} Array of artist objects
  */
 async function getTopArtists(userId, limit = 50) {
+  const cacheKey = `top-artists:${userId}`;
+  const cached = getCached(cacheKey);
+  if (cached) {
+    logger.debug('Returning cached top artists', { userId });
+    return cached;
+  }
+
   const accessToken = await ensureValidToken(userId);
   const data = await apiRequest(`/me/top/artists?limit=${limit}`, accessToken);
 
-  return data.items.map(artist => ({
+  const result = data.items.map(artist => ({
     name: artist.name,
     image: artist.images[0]?.url,
     genres: artist.genres,
     url: artist.external_urls.spotify,
   }));
+
+  setCache(cacheKey, result);
+  return result;
 }
 
 /**
- * Get all unique artists from the user's liked songs.
- * Handles pagination automatically.
+ * Get unique artists from the user's liked songs.
+ * Set SPOTIFY_MAX_LIKED_PAGES env var to limit pages (0 = unlimited).
  * @param {string} userId - Session identifier
  * @returns {Promise<Array>} Array of unique artist objects
  */
 async function getLikedArtists(userId) {
-  const accessToken = await ensureValidToken(userId);
-  const artistsSet = new Set();
-  let nextUrl = '/me/tracks?limit=50';
+  const cacheKey = `liked-artists:${userId}`;
+  const cached = getCached(cacheKey);
+  if (cached) {
+    logger.debug('Returning cached liked artists', { userId });
+    return cached;
+  }
 
-  while (nextUrl) {
+  const accessToken = await ensureValidToken(userId);
+  const artistsMap = new Map(); // Use Map with artist ID as key (faster than JSON.stringify)
+  let nextUrl = '/me/tracks?limit=50';
+  let pageCount = 0;
+
+  // 0 = unlimited, otherwise limits to N pages (N * 50 songs)
+  const maxPages = parseInt(process.env.SPOTIFY_MAX_LIKED_PAGES || '10', 10);
+
+  while (nextUrl && (maxPages === 0 || pageCount < maxPages)) {
     const data = await apiRequest(nextUrl, accessToken);
+    pageCount++;
 
     for (const item of data.items) {
       for (const artist of item.track.artists) {
-        artistsSet.add(JSON.stringify({
-          name: artist.name,
-          url: artist.external_urls.spotify,
-        }));
+        if (!artistsMap.has(artist.id)) {
+          artistsMap.set(artist.id, {
+            name: artist.name,
+            url: artist.external_urls.spotify,
+          });
+        }
       }
     }
 
     nextUrl = data.next;
   }
 
-  return Array.from(artistsSet).map(JSON.parse);
+  const result = Array.from(artistsMap.values());
+  setCache(cacheKey, result);
+  logger.debug('Fetched liked artists', { userId, count: result.length, pages: pageCount, maxPages: maxPages || 'unlimited' });
+  return result;
 }
 
 /**

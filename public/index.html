@@ -6,6 +6,8 @@
     <title>Concert Notify</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="weeklyShows.js" defer></script>
+    <script src="calendar.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 <body>
@@ -48,6 +50,24 @@
                     <h2>Your Upcoming Shows</h2>
                     <div class="artists-list" id="matchesList"></div>
                 </div>
+            </div>
+
+            <!-- Weekly Calendar View (hidden by default, toggle via JS) -->
+            <div class="calendar-container" id="calendarContainer" style="display: none;">
+                <div class="calendar-header">
+                    <button class="calendar-nav calendar-nav--prev" id="calendarPrev" aria-label="Previous week">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <h2 id="calendarTitle">This Week</h2>
+                    <button class="calendar-nav calendar-nav--next" id="calendarNext" aria-label="Next week">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="calendarView"></div>
             </div>
         </div>
     </div>
