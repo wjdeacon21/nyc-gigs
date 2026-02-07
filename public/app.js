@@ -25,6 +25,10 @@
     calendarTitle: document.getElementById('calendarTitle'),
     calendarPrev: document.getElementById('calendarPrev'),
     calendarNext: document.getElementById('calendarNext'),
+    viewToggle: document.getElementById('viewToggle'),
+    viewListBtn: document.getElementById('viewListBtn'),
+    viewCalendarBtn: document.getElementById('viewCalendarBtn'),
+    artistsContainer: document.querySelector('.artists-container'),
   };
 
   // Application state
@@ -37,6 +41,8 @@
     // Calendar state
     calendarWeekOffset: 0,
     calendarMatches: [],
+    // View state: 'list' or 'calendar'
+    currentView: 'list',
   };
 
   // Storage keys
@@ -313,6 +319,9 @@
 
     // Render calendar view
     renderCalendar(matches);
+
+    // Initialize view toggle (show list view by default)
+    switchView(state.currentView);
   }
 
   /**
@@ -326,11 +335,42 @@
     // Store matches for navigation
     state.calendarMatches = matches;
 
+    // Start on the week of the first event (matches are already sorted by date)
+    if (matches.length > 0) {
+      const firstEventDate = WeeklyShows.parseShowDate(matches[0].date);
+      if (firstEventDate) {
+        state.calendarWeekOffset = getWeekOffset(firstEventDate);
+      }
+    }
+
     // Render with current offset
     updateCalendarView();
+  }
 
-    // Show calendar container
-    elements.calendarContainer.style.display = 'block';
+  /**
+   * Calculates the week offset from today to a given date.
+   * @param {Date} targetDate
+   * @returns {number} Week offset (0 = this week, 1 = next week, -1 = last week, etc.)
+   */
+  function getWeekOffset(targetDate) {
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const targetStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+
+    // Get Monday of each week
+    const todayDay = todayStart.getDay();
+    const todayMonday = new Date(todayStart);
+    todayMonday.setDate(todayStart.getDate() - (todayDay === 0 ? 6 : todayDay - 1));
+
+    const targetDay = targetStart.getDay();
+    const targetMonday = new Date(targetStart);
+    targetMonday.setDate(targetStart.getDate() - (targetDay === 0 ? 6 : targetDay - 1));
+
+    // Calculate difference in weeks
+    const diffTime = targetMonday.getTime() - todayMonday.getTime();
+    const diffWeeks = Math.round(diffTime / (7 * 24 * 60 * 60 * 1000));
+
+    return diffWeeks;
   }
 
   /**
@@ -392,6 +432,31 @@
     updateCalendarView();
   }
 
+  /**
+   * Switches between list and calendar views.
+   */
+  function switchView(view) {
+    if (view !== 'list' && view !== 'calendar') return;
+
+    state.currentView = view;
+
+    // Update button states
+    if (elements.viewListBtn) {
+      elements.viewListBtn.classList.toggle('view-toggle__btn--active', view === 'list');
+    }
+    if (elements.viewCalendarBtn) {
+      elements.viewCalendarBtn.classList.toggle('view-toggle__btn--active', view === 'calendar');
+    }
+
+    // Update view visibility
+    if (elements.artistsContainer) {
+      elements.artistsContainer.classList.toggle('view--active', view === 'list');
+    }
+    if (elements.calendarContainer) {
+      elements.calendarContainer.classList.toggle('view--active', view === 'calendar');
+    }
+  }
+
   // Prevent XSS when rendering user-controlled data
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -410,6 +475,14 @@
     }
     if (elements.calendarNext) {
       elements.calendarNext.addEventListener('click', calendarNextWeek);
+    }
+
+    // View toggle
+    if (elements.viewListBtn) {
+      elements.viewListBtn.addEventListener('click', () => switchView('list'));
+    }
+    if (elements.viewCalendarBtn) {
+      elements.viewCalendarBtn.addEventListener('click', () => switchView('calendar'));
     }
 
     auth.init();

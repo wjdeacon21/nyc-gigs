@@ -132,6 +132,55 @@ h1 {
   border-color: var(--color-text);
 }
 
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.view-toggle__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-text-secondary);
+  color: var(--color-text-secondary);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.view-toggle__btn:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.view-toggle__btn--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.view-toggle__btn--active:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* View containers - hidden by default, shown via JS */
+.artists-container,
+.calendar-container {
+  display: none;
+}
+
+.artists-container.view--active,
+.calendar-container.view--active {
+  display: block;
+}
+
 /* Artists Section */
 h2 {
   color: var(--color-text);
@@ -281,11 +330,10 @@ h2 {
    ========================================================================== */
 
 /* Calendar container - matches artists-column styling for consistency */
-.calendar-container {
+.calendar-container.view--active {
   background: #1a1a1a;
   border-radius: var(--border-radius-md);
   padding: 1.5rem;
-  margin-top: 1rem;
 }
 
 /* Calendar header with navigation */
@@ -349,12 +397,15 @@ h2 {
  * DAY COLUMN: Vertical flex container
  * - Header stays at top
  * - Shows area fills remaining space and scrolls if needed
+ * - min-width: 0 prevents grid blowout from long content
  */
 .calendar-day {
   display: flex;
   flex-direction: column;
   background: var(--color-surface);
   min-height: 300px; /* Ensures consistent height even when empty */
+  min-width: 0; /* Critical: prevents content from expanding column */
+  overflow: hidden;
 }
 
 /* Today column - subtle visual distinction */
@@ -412,6 +463,7 @@ h2 {
   gap: 0.5rem;
   padding: 0.5rem;
   overflow-y: auto;
+  min-width: 0; /* Prevent content from expanding container */
 }
 
 /* Empty state placeholder */
@@ -432,24 +484,30 @@ h2 {
   border-radius: var(--border-radius-sm);
   padding: 0.5rem;
   font-size: 0.85rem;
+  min-width: 0; /* Prevent content from expanding card */
+  overflow: hidden;
 }
 
 .calendar-show__artist {
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 0.25rem;
-  /* Truncate long artist names in narrow columns */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Wrap long artist names instead of truncating */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Show pointer cursor when artist name is truncated (has title) */
+.calendar-show__artist[title] {
+  cursor: help;
 }
 
 .calendar-show__venue {
   color: var(--color-text-secondary);
   font-size: 0.75rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Wrap long venue names */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .calendar-show__time {

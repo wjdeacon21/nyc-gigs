@@ -79,6 +79,20 @@ const WeeklyCalendar = (function () {
   }
 
   /**
+   * Truncates text to maxLength characters, adding ellipsis if needed.
+   * @param {string} text
+   * @param {number} maxLength - Truncate if longer than this
+   * @param {number} truncateTo - Length to truncate to (before ellipsis)
+   * @returns {string}
+   */
+  function truncateText(text, maxLength, truncateTo) {
+    if (!text || text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, truncateTo) + '…';
+  }
+
+  /**
    * Renders a single show block.
    *
    * @param {Object} show - Show object with artists, venue, time
@@ -86,13 +100,20 @@ const WeeklyCalendar = (function () {
    */
   function renderShow(show) {
     // Display first artist as primary, could extend to show all
-    const artistDisplay = Array.isArray(show.artists)
+    const fullArtistName = Array.isArray(show.artists)
       ? show.artists.join(', ')
       : 'Unknown Artist';
 
+    // Truncate long artist names: if > 30 chars, show first 25 + ellipsis
+    const artistDisplay = truncateText(fullArtistName, 30, 25);
+    const isTruncated = artistDisplay !== fullArtistName;
+
+    // Add title attribute for tooltip if truncated
+    const titleAttr = isTruncated ? `title="${escapeHtml(fullArtistName)}"` : '';
+
     return `
       <div class="calendar-show">
-        <div class="calendar-show__artist">${escapeHtml(artistDisplay)}</div>
+        <div class="calendar-show__artist" ${titleAttr}>${escapeHtml(artistDisplay)}</div>
         <div class="calendar-show__venue">${escapeHtml(show.venue)}</div>
         <div class="calendar-show__time">${escapeHtml(show.time)}</div>
       </div>
