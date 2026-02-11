@@ -12,10 +12,6 @@ const config = {
   baseUrl: process.env.SCRAPER_BASE_URL || 'https://www.ohmyrockness.com',
   showsPath: '/shows',
 
-  // Pagination
-  startPage: 1,
-  endPage: parseInt(process.env.SCRAPER_PAGES, 10) || 30,
-
   // Puppeteer settings
   puppeteer: {
     headless: true,
@@ -43,20 +39,14 @@ const config = {
     keepHistory: process.env.SCRAPER_KEEP_HISTORY === 'true',
   },
 
-  // Rate limiting
-  delayBetweenPages: parseInt(process.env.SCRAPER_DELAY_MS, 10) || 1000,
 };
 
 /**
- * Builds the URL for a specific page.
- * @param {number} pageNum - Page number
- * @returns {string} Full URL
+ * Builds the URL for all shows.
+ * @returns {string} Full URL with all=true query param
  */
-function buildPageUrl(pageNum) {
-  if (pageNum === 1) {
-    return `${config.baseUrl}${config.showsPath}`;
-  }
-  return `${config.baseUrl}${config.showsPath}?page=${pageNum}`;
+function buildShowsUrl() {
+  return `${config.baseUrl}${config.showsPath}?all=true`;
 }
 
-module.exports = { config, buildPageUrl };
+module.exports = { config, buildShowsUrl };

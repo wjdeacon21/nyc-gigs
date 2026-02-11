@@ -8,9 +8,7 @@
  *   node src/scraper/index.js --dry-run # Scrape but don't save
  *
  * Environment variables:
- *   SCRAPER_PAGES       - Number of pages to scrape (default: 5)
  *   SCRAPER_OUTPUT_DIR  - Output directory (default: data)
- *   SCRAPER_DELAY_MS    - Delay between pages in ms (default: 1000)
  *   LOG_LEVEL           - debug|info|warn|error (default: info)
  */
 
@@ -18,20 +16,19 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 
-const { config, buildPageUrl } = require('./config');
+const { config, buildShowsUrl } = require('./config');
 const { parseShows, getSelectors } = require('./parsers');
 const { logger } = require('../shared/logger');
 const { validateShows } = require('../shared/types');
 
 /**
- * Scrapes a single page of shows.
+ * Scrapes the all-shows page.
  * @param {puppeteer.Page} page - Puppeteer page instance
- * @param {number} pageNum - Page number to scrape
  * @returns {Promise<Array>} Raw show data from page
  */
-async function scrapePage(page, pageNum) {
-  const url = buildPageUrl(pageNum);
-  logger.info(`Scraping page ${pageNum}`, { url });
+async function scrapePage(page) {
+  const url = buildShowsUrl();
+  logger.info('Scraping all shows', { url });
 
   await page.goto(url, {
     waitUntil: 'networkidle2',
@@ -39,6 +36,9 @@ async function scrapePage(page, pageNum) {
   });
 
   const selectors = getSelectors();
+
+  // Wait for JS-rendered content to appear
+  await page.waitForSelector(selectors.showRow, { timeout: 15000 });
 
   // Extract shows using browser-side evaluation
   const rawShows = await page.$$eval(
@@ -82,79 +82,44 @@ async function scrapePage(page, pageNum) {
     selectors.venue
   );
 
-  logger.debug(`Found ${rawShows.length} shows on page ${pageNum}`);
+  logger.info(`Found ${rawShows.length} shows`);
   return rawShows;
 }
 
 /**
- * Main scraper function. Scrapes all configured pages in parallel.
+ * Main scraper function. Loads all shows from a single page.
  * @returns {Promise<Array>} All scraped and validated shows
  */
 async function scrape() {
-  logger.info('Starting scraper', {
-    pages: `${config.startPage}-${config.endPage}`,
-    baseUrl: config.baseUrl,
-  });
+  logger.info('Starting scraper', { baseUrl: config.baseUrl });
 
   const browser = await puppeteer.launch({
     headless: config.puppeteer.headless,
     args: config.puppeteer.args,
   });
 
-  const allShows = [];
-  const CONCURRENT_PAGES = 3; // Scrape 3 pages at a time
-
   try {
-    const pageNumbers = [];
-    for (let i = config.startPage; i <= config.endPage; i++) {
-      pageNumbers.push(i);
-    }
+    const page = await browser.newPage();
+    await page.setUserAgent(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+    );
 
-    // Process pages in batches for parallel scraping
-    for (let i = 0; i < pageNumbers.length; i += CONCURRENT_PAGES) {
-      const batch = pageNumbers.slice(i, i + CONCURRENT_PAGES);
+    const rawShows = await scrapePage(page);
+    await page.close();
 
-      const batchPromises = batch.map(async (pageNum) => {
-        const page = await browser.newPage();
-        await page.setUserAgent(
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-        );
+    // Parse and validate
+    const parsedShows = parseShows(rawShows);
+    const validShows = validateShows(parsedShows);
 
-        try {
-          const pageShows = await scrapePage(page, pageNum);
-          return pageShows;
-        } catch (error) {
-          logger.error(`Failed to scrape page ${pageNum}`, { error: error.message });
-          return [];
-        } finally {
-          await page.close();
-        }
-      });
+    logger.info('Scraping complete', {
+      raw: rawShows.length,
+      valid: validShows.length,
+    });
 
-      const batchResults = await Promise.all(batchPromises);
-      for (const shows of batchResults) {
-        allShows.push(...shows);
-      }
-
-      // Small delay between batches to be polite to the server
-      if (i + CONCURRENT_PAGES < pageNumbers.length) {
-        await new Promise(r => setTimeout(r, 500));
-      }
-    }
+    return validShows;
   } finally {
     await browser.close();
   }
-
-  // Parse and validate
-  const parsedShows = parseShows(allShows);
-  const validShows = validateShows(parsedShows);
-
-  logger.info('Scraping complete', {
-    raw: allShows.length,
-    valid: validShows.length,
-  });
-
-  return validShows;
 }
 
 /**
