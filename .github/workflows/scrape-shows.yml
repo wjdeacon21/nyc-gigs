@@ -47,4 +47,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add data/shows.json
           git commit -m "Update shows data [automated]"
+          git pull --rebase origin main
           git push
