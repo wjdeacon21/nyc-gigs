@@ -104,17 +104,30 @@ async function ensureValidToken(userId) {
  */
 async function apiRequest(endpoint, accessToken, options = {}) {
   const url = endpoint.startsWith('http') ? endpoint : `${config.spotify.apiBaseUrl}${endpoint}`;
+  const maxRetries = 3;
 
-  const response = await axios({
-    url,
-    ...options,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      ...options.headers,
-    },
-  });
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await axios({
+        url,
+        ...options,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          ...options.headers,
+        },
+      });
 
-  return response.data;
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 429 && attempt < maxRetries) {
+        const retryAfter = parseInt(error.response.headers['retry-after'] || '1', 10);
+        logger.debug('Rate limited by Spotify, retrying', { endpoint, attempt, retryAfter });
+        await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+        continue;
+      }
+      throw error;
+    }
+  }
 }
 
 /**
@@ -180,6 +193,7 @@ async function getLikedArtists(userId) {
 
   const collectArtists = (data) => {
     for (const item of data.items) {
+      if (!item.track?.artists) continue;
       for (const artist of item.track.artists) {
         if (!artistsMap.has(artist.id)) {
           artistsMap.set(artist.id, {
@@ -202,12 +216,16 @@ async function getLikedArtists(userId) {
   }
 
   if (remainingOffsets.length > 0) {
-    const remainingPages = await Promise.all(
-      remainingOffsets.map(offset =>
-        apiRequest(`/me/tracks?limit=${limit}&offset=${offset}`, accessToken)
-      )
-    );
-    remainingPages.forEach(collectArtists);
+    const chunkSize = 3;
+    for (let i = 0; i < remainingOffsets.length; i += chunkSize) {
+      const chunk = remainingOffsets.slice(i, i + chunkSize);
+      const pages = await Promise.all(
+        chunk.map(offset =>
+          apiRequest(`/me/tracks?limit=${limit}&offset=${offset}`, accessToken)
+        )
+      );
+      pages.forEach(collectArtists);
+    }
   }
 
   const pageCount = 1 + remainingOffsets.length;
