@@ -10,11 +10,11 @@ require('dotenv').config();
 const config = {
   // Target site
   baseUrl: process.env.SCRAPER_BASE_URL || 'https://www.ohmyrockness.com',
-  showsPath: '/shows/just-announced',
+  showsPath: '/shows',
 
   // Pagination
   startPage: 1,
-  endPage: parseInt(process.env.SCRAPER_PAGES, 10) || 5,
+  endPage: parseInt(process.env.SCRAPER_PAGES, 10) || 30,
 
   // Puppeteer settings
   puppeteer: {
@@ -53,6 +53,9 @@ const config = {
  * @returns {string} Full URL
  */
 function buildPageUrl(pageNum) {
+  if (pageNum === 1) {
+    return `${config.baseUrl}${config.showsPath}`;
+  }
   return `${config.baseUrl}${config.showsPath}?page=${pageNum}`;
 }
 
