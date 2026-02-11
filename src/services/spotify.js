@@ -169,17 +169,16 @@ async function getLikedArtists(userId) {
   }
 
   const accessToken = await ensureValidToken(userId);
-  const artistsMap = new Map(); // Use Map with artist ID as key (faster than JSON.stringify)
-  let nextUrl = '/me/tracks?limit=50';
-  let pageCount = 0;
+  const artistsMap = new Map();
+  const limit = 50;
 
   // 0 = unlimited, otherwise limits to N pages (N * 50 songs)
   const maxPages = parseInt(process.env.SPOTIFY_MAX_LIKED_PAGES || '10', 10);
 
-  while (nextUrl && (maxPages === 0 || pageCount < maxPages)) {
-    const data = await apiRequest(nextUrl, accessToken);
-    pageCount++;
+  // Fetch first page to get total count
+  const firstPage = await apiRequest(`/me/tracks?limit=${limit}&offset=0`, accessToken);
 
+  const collectArtists = (data) => {
     for (const item of data.items) {
       for (const artist of item.track.artists) {
         if (!artistsMap.has(artist.id)) {
@@ -190,10 +189,28 @@ async function getLikedArtists(userId) {
         }
       }
     }
+  };
 
-    nextUrl = data.next;
+  collectArtists(firstPage);
+
+  // Calculate remaining pages and fetch in parallel
+  const total = firstPage.total;
+  const maxItems = maxPages === 0 ? total : Math.min(total, maxPages * limit);
+  const remainingOffsets = [];
+  for (let offset = limit; offset < maxItems; offset += limit) {
+    remainingOffsets.push(offset);
   }
 
+  if (remainingOffsets.length > 0) {
+    const remainingPages = await Promise.all(
+      remainingOffsets.map(offset =>
+        apiRequest(`/me/tracks?limit=${limit}&offset=${offset}`, accessToken)
+      )
+    );
+    remainingPages.forEach(collectArtists);
+  }
+
+  const pageCount = 1 + remainingOffsets.length;
   const result = Array.from(artistsMap.values());
   setCache(cacheKey, result);
   logger.debug('Fetched liked artists', { userId, count: result.length, pages: pageCount, maxPages: maxPages || 'unlimited' });
