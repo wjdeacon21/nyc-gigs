@@ -1,82 +1,6 @@
 [
   {
     "artists": [
-      "Ekko Astral",
-      "Jasno",
-      "Tea Eater",
-      "EVG",
-      "Duchess",
-      "Berra",
-      "Isobel Fox",
-      "RenRiot",
-      "Goof Goblin"
-    ],
-    "venue": "268 Meserole",
-    "date": "7/4/2026",
-    "time": "04:00 PM"
-  },
-  {
-    "artists": [
-      "Hayden James",
-      "Bipolar Sunshine",
-      "Paperwater",
-      "Eli Fola"
-    ],
-    "venue": "Elsewhere",
-    "date": "7/4/2026",
-    "time": "08:00 PM"
-  },
-  {
-    "artists": [
-      "Hot Chip (DJ set)",
-      "Mike Simonetti"
-    ],
-    "venue": "Good Room",
-    "date": "7/5/2026",
-    "time": "02:00 AM"
-  },
-  {
-    "artists": [
-      "Akumandra",
-      "Sainte Vie"
-    ],
-    "venue": "Knockdown Center",
-    "date": "7/4/2026",
-    "time": "07:00 PM"
-  },
-  {
-    "artists": [
-      "Frank Hurricane",
-      "Carlos Truly",
-      "Infinite Loss",
-      "Clipping Wings",
-      "Canticles for the New Scene (mems Bueno / gobbinjr / Velvet Vaughan)"
-    ],
-    "venue": "Rippers",
-    "date": "7/4/2026",
-    "time": "09:00 PM"
-  },
-  {
-    "artists": [
-      "Hatebreed",
-      "Vision of Disorder",
-      "Terror",
-      "First Blood",
-      "Twitching Tongues",
-      "Devourment",
-      "Balmora",
-      "Big Boy",
-      "Volcano",
-      "Harvest",
-      "Snuffed on Sight",
-      "and more!"
-    ],
-    "venue": "The Dome at Adventure Crossing",
-    "date": "7/4/2026",
-    "time": "02:00 PM"
-  },
-  {
-    "artists": [
       "Louis Armstrong at 125"
     ],
     "venue": "David Rubenstein Atrium at Lincoln Center",
@@ -258,8 +182,7 @@
   },
   {
     "artists": [
-      "Florry",
-      "Sweet Baby Jesus"
+      "AKRIILA"
     ],
     "venue": "Elsewhere",
     "date": "7/7/2026",
@@ -267,7 +190,8 @@
   },
   {
     "artists": [
-      "AKRIILA"
+      "Florry",
+      "Sweet Baby Jesus"
     ],
     "venue": "Elsewhere",
     "date": "7/7/2026",
@@ -292,16 +216,6 @@
   },
   {
     "artists": [
-      "Freedom Attic",
-      "Self Help",
-      "Nettle"
-    ],
-    "venue": "Night Club 101",
-    "date": "7/7/2026",
-    "time": "10:30 PM"
-  },
-  {
-    "artists": [
       "Foxes in Fiction",
       "Nicholas Nicholas",
       "PAYW4LL"
@@ -309,6 +223,16 @@
     "venue": "Night Club 101",
     "date": "7/8/2026",
     "time": "02:00 AM"
+  },
+  {
+    "artists": [
+      "Freedom Attic",
+      "Self Help",
+      "Nettle"
+    ],
+    "venue": "Night Club 101",
+    "date": "7/7/2026",
+    "time": "10:30 PM"
   },
   {
     "artists": [
@@ -386,16 +310,16 @@
       "Flying Lotus"
     ],
     "venue": "Blue Note",
-    "date": "7/9/2026",
-    "time": "02:00 AM"
+    "date": "7/8/2026",
+    "time": "10:00 PM"
   },
   {
     "artists": [
       "Flying Lotus"
     ],
     "venue": "Blue Note",
-    "date": "7/8/2026",
-    "time": "10:00 PM"
+    "date": "7/9/2026",
+    "time": "02:00 AM"
   },
   {
     "artists": [
@@ -646,6 +570,18 @@
   },
   {
     "artists": [
+      "Dolphin Uppercut Avenger",
+      "Babyghost",
+      "3mouth",
+      "TRICKSTER",
+      "xxhardbit3s"
+    ],
+    "venue": "Elsewhere",
+    "date": "7/10/2026",
+    "time": "01:00 AM"
+  },
+  {
+    "artists": [
       "Jialing",
       "Nurakai",
       "PaulyD33"
@@ -661,18 +597,6 @@
     "venue": "Elsewhere",
     "date": "7/9/2026",
     "time": "11:00 PM"
-  },
-  {
-    "artists": [
-      "Dolphin Uppercut Avenger",
-      "Babyghost",
-      "3mouth",
-      "TRICKSTER",
-      "xxhardbit3s"
-    ],
-    "venue": "Elsewhere",
-    "date": "7/10/2026",
-    "time": "01:00 AM"
   },
   {
     "artists": [
@@ -862,8 +786,9 @@
   },
   {
     "artists": [
-      "Small Fools",
-      "Sofia Campoamor"
+      "Dirt",
+      "Blahsum",
+      "Bad Therapist"
     ],
     "venue": "The Sultan Room",
     "date": "7/9/2026",
@@ -871,9 +796,8 @@
   },
   {
     "artists": [
-      "Dirt",
-      "Blahsum",
-      "Bad Therapist"
+      "Small Fools",
+      "Sofia Campoamor"
     ],
     "venue": "The Sultan Room",
     "date": "7/9/2026",
@@ -900,7 +824,9 @@
   },
   {
     "artists": [
-      "New Idea Society"
+      "New Idea Society",
+      "Sad13",
+      "Russian Baths"
     ],
     "venue": "Union Pool",
     "date": "7/9/2026",
@@ -908,9 +834,7 @@
   },
   {
     "artists": [
-      "New Idea Society",
-      "Sad13",
-      "Russian Baths"
+      "New Idea Society"
     ],
     "venue": "Union Pool",
     "date": "7/9/2026",
@@ -1235,16 +1159,6 @@
   },
   {
     "artists": [
-      "Darling Gails",
-      "Caprice Le Marais",
-      "Torppsbride"
-    ],
-    "venue": "Purgatory",
-    "date": "7/11/2026",
-    "time": "03:00 AM"
-  },
-  {
-    "artists": [
       "Jak Lizard",
       "reya flowers",
       "Papo Cucaracha Vertedero el 3ro"
@@ -1252,6 +1166,16 @@
     "venue": "Purgatory",
     "date": "7/10/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Darling Gails",
+      "Caprice Le Marais",
+      "Torppsbride"
+    ],
+    "venue": "Purgatory",
+    "date": "7/11/2026",
+    "time": "03:00 AM"
   },
   {
     "artists": [
@@ -1455,16 +1379,6 @@
   },
   {
     "artists": [
-      "Ami",
-      "Nicky Elisabeth",
-      "Axela"
-    ],
-    "venue": "Elsewhere",
-    "date": "7/11/2026",
-    "time": "08:00 PM"
-  },
-  {
-    "artists": [
       "Father",
       "Boygirl",
       "Mijita"
@@ -1472,6 +1386,16 @@
     "venue": "Elsewhere",
     "date": "7/11/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Ami",
+      "Nicky Elisabeth",
+      "Axela"
+    ],
+    "venue": "Elsewhere",
+    "date": "7/11/2026",
+    "time": "08:00 PM"
   },
   {
     "artists": [
@@ -1494,6 +1418,16 @@
   },
   {
     "artists": [
+      "Spirits of Leo",
+      "Flag Day",
+      "Lesser Birds"
+    ],
+    "venue": "Gold Sounds",
+    "date": "7/11/2026",
+    "time": "06:30 PM"
+  },
+  {
+    "artists": [
       "Sin Against Sin",
       "Impunity",
       "Killing Me Softly",
@@ -1503,16 +1437,6 @@
     "venue": "Gold Sounds",
     "date": "7/11/2026",
     "time": "10:00 PM"
-  },
-  {
-    "artists": [
-      "Spirits of Leo",
-      "Flag Day",
-      "Lesser Birds"
-    ],
-    "venue": "Gold Sounds",
-    "date": "7/11/2026",
-    "time": "06:30 PM"
   },
   {
     "artists": [
@@ -1829,16 +1753,6 @@
   },
   {
     "artists": [
-      "Start Today",
-      "Suicide Eyes",
-      "Quick to Judge"
-    ],
-    "venue": "Gold Sounds",
-    "date": "7/12/2026",
-    "time": "06:00 PM"
-  },
-  {
-    "artists": [
       "Maul",
       "Gored Embrace",
       "Flesher"
@@ -1846,6 +1760,16 @@
     "venue": "Gold Sounds",
     "date": "7/12/2026",
     "time": "11:30 PM"
+  },
+  {
+    "artists": [
+      "Start Today",
+      "Suicide Eyes",
+      "Quick to Judge"
+    ],
+    "venue": "Gold Sounds",
+    "date": "7/12/2026",
+    "time": "06:00 PM"
   },
   {
     "artists": [
@@ -1936,14 +1860,6 @@
   },
   {
     "artists": [
-      "American Vanity"
-    ],
-    "venue": "Mercury Lounge",
-    "date": "7/12/2026",
-    "time": "09:00 PM"
-  },
-  {
-    "artists": [
       "Gwen",
       "Cut The Kids In Half",
       "Headstrings"
@@ -1951,6 +1867,14 @@
     "venue": "Mercury Lounge",
     "date": "7/13/2026",
     "time": "12:00 AM"
+  },
+  {
+    "artists": [
+      "American Vanity"
+    ],
+    "venue": "Mercury Lounge",
+    "date": "7/12/2026",
+    "time": "09:00 PM"
   },
   {
     "artists": [
@@ -1963,14 +1887,6 @@
   },
   {
     "artists": [
-      "KEYSE"
-    ],
-    "venue": "Night Club 101",
-    "date": "7/13/2026",
-    "time": "01:30 AM"
-  },
-  {
-    "artists": [
       "The Narcotix",
       "The Cradle",
       "Alex Koi",
@@ -1979,6 +1895,14 @@
     "venue": "Night Club 101",
     "date": "7/12/2026",
     "time": "10:30 PM"
+  },
+  {
+    "artists": [
+      "KEYSE"
+    ],
+    "venue": "Night Club 101",
+    "date": "7/13/2026",
+    "time": "01:30 AM"
   },
   {
     "artists": [
@@ -2074,16 +1998,16 @@
       "Christeene"
     ],
     "venue": "Joe's Pub",
-    "date": "7/14/2026",
-    "time": "01:30 AM"
+    "date": "7/13/2026",
+    "time": "11:00 PM"
   },
   {
     "artists": [
       "Christeene"
     ],
     "venue": "Joe's Pub",
-    "date": "7/13/2026",
-    "time": "11:00 PM"
+    "date": "7/14/2026",
+    "time": "01:30 AM"
   },
   {
     "artists": [
@@ -2176,16 +2100,6 @@
   },
   {
     "artists": [
-      "Sam Wenc",
-      "More Eaze",
-      "Alan Licht"
-    ],
-    "venue": "Night Club 101",
-    "date": "7/15/2026",
-    "time": "01:30 AM"
-  },
-  {
-    "artists": [
       "shepup",
       "Cal Fish",
       "Fawn Ridge"
@@ -2193,6 +2107,16 @@
     "venue": "Night Club 101",
     "date": "7/14/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Sam Wenc",
+      "More Eaze",
+      "Alan Licht"
+    ],
+    "venue": "Night Club 101",
+    "date": "7/15/2026",
+    "time": "01:30 AM"
   },
   {
     "artists": [
@@ -2497,15 +2421,6 @@
   },
   {
     "artists": [
-      "Eurohead",
-      "Don-Ri"
-    ],
-    "venue": "Elsewhere",
-    "date": "7/16/2026",
-    "time": "10:00 PM"
-  },
-  {
-    "artists": [
       "WU LYF",
       "Infinity Knives",
       "Brian Ennals"
@@ -2513,6 +2428,15 @@
     "venue": "Elsewhere",
     "date": "7/17/2026",
     "time": "02:30 AM"
+  },
+  {
+    "artists": [
+      "Eurohead",
+      "Don-Ri"
+    ],
+    "venue": "Elsewhere",
+    "date": "7/16/2026",
+    "time": "10:00 PM"
   },
   {
     "artists": [
@@ -2643,20 +2567,20 @@
   },
   {
     "artists": [
+      "Bird and Byron"
+    ],
+    "venue": "Night Club 101",
+    "date": "7/16/2026",
+    "time": "10:30 PM"
+  },
+  {
+    "artists": [
       "Whalebone",
       "BOXXER"
     ],
     "venue": "Night Club 101",
     "date": "7/17/2026",
     "time": "01:30 AM"
-  },
-  {
-    "artists": [
-      "Bird and Byron"
-    ],
-    "venue": "Night Club 101",
-    "date": "7/16/2026",
-    "time": "10:30 PM"
   },
   {
     "artists": [
@@ -3032,6 +2956,15 @@
   },
   {
     "artists": [
+      "Space Wizard",
+      "Gunpoint"
+    ],
+    "venue": "The Meadows",
+    "date": "7/18/2026",
+    "time": "03:00 AM"
+  },
+  {
+    "artists": [
       "Beton Arme",
       "Brower",
       "Bullshit Detector",
@@ -3050,15 +2983,6 @@
     "venue": "The Meadows",
     "date": "7/17/2026",
     "time": "10:00 PM"
-  },
-  {
-    "artists": [
-      "Space Wizard",
-      "Gunpoint"
-    ],
-    "venue": "The Meadows",
-    "date": "7/18/2026",
-    "time": "03:00 AM"
   },
   {
     "artists": [
@@ -3276,15 +3200,6 @@
   },
   {
     "artists": [
-      "Cola",
-      "PARKiNG"
-    ],
-    "venue": "Night Club 101",
-    "date": "7/18/2026",
-    "time": "11:30 PM"
-  },
-  {
-    "artists": [
       "Talk Bazaar",
       "Panther Hollow",
       "Isabel Shaye",
@@ -3293,6 +3208,15 @@
     "venue": "Night Club 101",
     "date": "7/19/2026",
     "time": "02:00 AM"
+  },
+  {
+    "artists": [
+      "Cola",
+      "PARKiNG"
+    ],
+    "venue": "Night Club 101",
+    "date": "7/18/2026",
+    "time": "11:30 PM"
   },
   {
     "artists": [
@@ -3316,20 +3240,20 @@
   },
   {
     "artists": [
-      "Stretch Armstrong"
-    ],
-    "venue": "Public Records",
-    "date": "7/18/2026",
-    "time": "04:00 PM"
-  },
-  {
-    "artists": [
       "King Garbage",
       "Stice"
     ],
     "venue": "Public Records",
     "date": "7/18/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Stretch Armstrong"
+    ],
+    "venue": "Public Records",
+    "date": "7/18/2026",
+    "time": "04:00 PM"
   },
   {
     "artists": [
@@ -4155,14 +4079,6 @@
   },
   {
     "artists": [
-      "The Femcels"
-    ],
-    "venue": "Elsewhere",
-    "date": "7/24/2026",
-    "time": "10:30 PM"
-  },
-  {
-    "artists": [
       "Pearly Drops",
       "RIP SWIRL (DJ Set)",
       "Moonbby (DJ Set)"
@@ -4170,6 +4086,14 @@
     "venue": "Elsewhere",
     "date": "7/24/2026",
     "time": "10:00 PM"
+  },
+  {
+    "artists": [
+      "The Femcels"
+    ],
+    "venue": "Elsewhere",
+    "date": "7/24/2026",
+    "time": "10:30 PM"
   },
   {
     "artists": [
@@ -5775,15 +5699,6 @@
   },
   {
     "artists": [
-      "Elliott",
-      "Mirror Mirror"
-    ],
-    "venue": "Crossroads",
-    "date": "8/1/2026",
-    "time": "05:30 PM"
-  },
-  {
-    "artists": [
       "Paulson",
       "Teenage Halloween",
       "Latewaves",
@@ -5792,6 +5707,15 @@
     "venue": "Crossroads",
     "date": "8/2/2026",
     "time": "12:00 AM"
+  },
+  {
+    "artists": [
+      "Elliott",
+      "Mirror Mirror"
+    ],
+    "venue": "Crossroads",
+    "date": "8/1/2026",
+    "time": "05:30 PM"
   },
   {
     "artists": [
@@ -5930,6 +5854,22 @@
   },
   {
     "artists": [
+      "Shevya"
+    ],
+    "venue": "Mercury Lounge",
+    "date": "8/1/2026",
+    "time": "10:00 PM"
+  },
+  {
+    "artists": [
+      "Shevya"
+    ],
+    "venue": "Mercury Lounge",
+    "date": "8/1/2026",
+    "time": "10:00 PM"
+  },
+  {
+    "artists": [
       "Heaven",
       "CFR",
       "Sunday Artist"
@@ -5937,22 +5877,6 @@
     "venue": "Mercury Lounge",
     "date": "8/2/2026",
     "time": "01:00 AM"
-  },
-  {
-    "artists": [
-      "Shevya"
-    ],
-    "venue": "Mercury Lounge",
-    "date": "8/1/2026",
-    "time": "10:00 PM"
-  },
-  {
-    "artists": [
-      "Shevya"
-    ],
-    "venue": "Mercury Lounge",
-    "date": "8/1/2026",
-    "time": "10:00 PM"
   },
   {
     "artists": [
@@ -6596,19 +6520,19 @@
   },
   {
     "artists": [
-      "Charlotte de Witte"
-    ],
-    "venue": "Knockdown Center",
-    "date": "8/8/2026",
-    "time": "02:00 AM"
-  },
-  {
-    "artists": [
       "Claude VonStroke"
     ],
     "venue": "Knockdown Center",
     "date": "8/7/2026",
     "time": "07:00 PM"
+  },
+  {
+    "artists": [
+      "Charlotte de Witte"
+    ],
+    "venue": "Knockdown Center",
+    "date": "8/8/2026",
+    "time": "02:00 AM"
   },
   {
     "artists": [
@@ -7494,20 +7418,20 @@
   },
   {
     "artists": [
-      "Kyle Walker"
-    ],
-    "venue": "Elsewhere",
-    "date": "8/15/2026",
-    "time": "08:00 PM"
-  },
-  {
-    "artists": [
       "Born at Midnite",
       "Paycheque"
     ],
     "venue": "Elsewhere",
     "date": "8/15/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Kyle Walker"
+    ],
+    "venue": "Elsewhere",
+    "date": "8/15/2026",
+    "time": "08:00 PM"
   },
   {
     "artists": [
@@ -7599,19 +7523,19 @@
   },
   {
     "artists": [
-      "Stretch Armstrong"
-    ],
-    "venue": "Public Records",
-    "date": "8/15/2026",
-    "time": "04:00 PM"
-  },
-  {
-    "artists": [
       "Evenson"
     ],
     "venue": "Public Records",
     "date": "8/15/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Stretch Armstrong"
+    ],
+    "venue": "Public Records",
+    "date": "8/15/2026",
+    "time": "04:00 PM"
   },
   {
     "artists": [
@@ -8085,6 +8009,14 @@
   },
   {
     "artists": [
+      "Alex Bone"
+    ],
+    "venue": "Elsewhere",
+    "date": "8/21/2026",
+    "time": "11:00 PM"
+  },
+  {
+    "artists": [
       "Kimonos",
       "Narasimha"
     ],
@@ -8099,14 +8031,6 @@
     "venue": "Elsewhere",
     "date": "8/21/2026",
     "time": "10:00 PM"
-  },
-  {
-    "artists": [
-      "Alex Bone"
-    ],
-    "venue": "Elsewhere",
-    "date": "8/21/2026",
-    "time": "11:00 PM"
   },
   {
     "artists": [
@@ -8434,14 +8358,6 @@
   },
   {
     "artists": [
-      "Califone"
-    ],
-    "venue": "Elsewhere",
-    "date": "8/23/2026",
-    "time": "11:00 PM"
-  },
-  {
-    "artists": [
       "LILLA",
       "Samia",
       "Ushka",
@@ -8451,6 +8367,14 @@
     "venue": "Elsewhere",
     "date": "8/23/2026",
     "time": "08:00 PM"
+  },
+  {
+    "artists": [
+      "Califone"
+    ],
+    "venue": "Elsewhere",
+    "date": "8/23/2026",
+    "time": "11:00 PM"
   },
   {
     "artists": [
@@ -9208,20 +9132,20 @@
   },
   {
     "artists": [
-      "Dual Damage"
-    ],
-    "venue": "The Meadows",
-    "date": "8/30/2026",
-    "time": "03:00 AM"
-  },
-  {
-    "artists": [
       "REZN",
       "Lockstep"
     ],
     "venue": "The Meadows",
     "date": "8/29/2026",
     "time": "10:00 PM"
+  },
+  {
+    "artists": [
+      "Dual Damage"
+    ],
+    "venue": "The Meadows",
+    "date": "8/30/2026",
+    "time": "03:00 AM"
   },
   {
     "artists": [
@@ -9895,16 +9819,16 @@
       "Lolo Zouai"
     ],
     "venue": "Blue Note",
-    "date": "9/10/2026",
-    "time": "02:00 AM"
+    "date": "9/9/2026",
+    "time": "10:00 PM"
   },
   {
     "artists": [
       "Lolo Zouai"
     ],
     "venue": "Blue Note",
-    "date": "9/9/2026",
-    "time": "10:00 PM"
+    "date": "9/10/2026",
+    "time": "02:00 AM"
   },
   {
     "artists": [
@@ -10758,20 +10682,20 @@
   },
   {
     "artists": [
-      "Tiffany Day"
-    ],
-    "venue": "Elsewhere",
-    "date": "9/16/2026",
-    "time": "11:00 PM"
-  },
-  {
-    "artists": [
       "The Belair Lip Bombs",
       "Armlock"
     ],
     "venue": "Elsewhere",
     "date": "9/17/2026",
     "time": "12:00 AM"
+  },
+  {
+    "artists": [
+      "Tiffany Day"
+    ],
+    "venue": "Elsewhere",
+    "date": "9/16/2026",
+    "time": "11:00 PM"
   },
   {
     "artists": [
@@ -11005,16 +10929,16 @@
       "DARKSIDE"
     ],
     "venue": "Music Hall of Williamsburg",
-    "date": "9/18/2026",
-    "time": "02:00 AM"
+    "date": "9/17/2026",
+    "time": "11:00 PM"
   },
   {
     "artists": [
       "DARKSIDE"
     ],
     "venue": "Music Hall of Williamsburg",
-    "date": "9/17/2026",
-    "time": "11:00 PM"
+    "date": "9/18/2026",
+    "time": "02:00 AM"
   },
   {
     "artists": [
@@ -11827,7 +11751,9 @@
   },
   {
     "artists": [
-      "Daniel Avery"
+      "Dan English",
+      "Wendy Eisenberg",
+      "Bella Litsa"
     ],
     "venue": "Elsewhere",
     "date": "9/23/2026",
@@ -11835,9 +11761,7 @@
   },
   {
     "artists": [
-      "Dan English",
-      "Wendy Eisenberg",
-      "Bella Litsa"
+      "Daniel Avery"
     ],
     "venue": "Elsewhere",
     "date": "9/23/2026",
@@ -12704,16 +12628,16 @@
       "Katie Pruitt"
     ],
     "venue": "Music Hall of Williamsburg",
-    "date": "9/28/2026",
-    "time": "11:00 PM"
+    "date": "9/29/2026",
+    "time": "12:00 AM"
   },
   {
     "artists": [
       "Katie Pruitt"
     ],
     "venue": "Music Hall of Williamsburg",
-    "date": "9/29/2026",
-    "time": "12:00 AM"
+    "date": "9/28/2026",
+    "time": "11:00 PM"
   },
   {
     "artists": [
@@ -13283,14 +13207,6 @@
     ],
     "venue": "The Bell House",
     "date": "10/2/2026",
-    "time": "11:30 PM"
-  },
-  {
-    "artists": [
-      "Phoebe Robinson"
-    ],
-    "venue": "The Bell House",
-    "date": "10/2/2026",
     "time": "11:00 PM"
   },
   {
@@ -13300,6 +13216,14 @@
     "venue": "The Bell House",
     "date": "10/3/2026",
     "time": "02:00 AM"
+  },
+  {
+    "artists": [
+      "Phoebe Robinson"
+    ],
+    "venue": "The Bell House",
+    "date": "10/2/2026",
+    "time": "11:30 PM"
   },
   {
     "artists": [
@@ -13565,21 +13489,21 @@
   },
   {
     "artists": [
-      "Ninajirachi",
-      "MGNA CRRRTA"
-    ],
-    "venue": "Brooklyn Steel",
-    "date": "10/4/2026",
-    "time": "11:30 PM"
-  },
-  {
-    "artists": [
       "Sugar",
       "J. Robbins (of Jawbox)"
     ],
     "venue": "Brooklyn Steel",
     "date": "10/4/2026",
     "time": "11:00 PM"
+  },
+  {
+    "artists": [
+      "Ninajirachi",
+      "MGNA CRRRTA"
+    ],
+    "venue": "Brooklyn Steel",
+    "date": "10/4/2026",
+    "time": "11:30 PM"
   },
   {
     "artists": [
@@ -13760,20 +13684,20 @@
   },
   {
     "artists": [
+      "Six Foot Blonde"
+    ],
+    "venue": "Baby's All Right",
+    "date": "10/9/2026",
+    "time": "01:30 AM"
+  },
+  {
+    "artists": [
       "Big Special",
       "Consumables"
     ],
     "venue": "Baby's All Right",
     "date": "10/8/2026",
     "time": "10:30 PM"
-  },
-  {
-    "artists": [
-      "Six Foot Blonde"
-    ],
-    "venue": "Baby's All Right",
-    "date": "10/9/2026",
-    "time": "01:30 AM"
   },
   {
     "artists": [
@@ -14138,19 +14062,19 @@
   },
   {
     "artists": [
-      "La Reezy"
-    ],
-    "venue": "Baby's All Right",
-    "date": "10/12/2026",
-    "time": "01:30 AM"
-  },
-  {
-    "artists": [
       "Jamie Fine"
     ],
     "venue": "Baby's All Right",
     "date": "10/11/2026",
     "time": "10:30 PM"
+  },
+  {
+    "artists": [
+      "La Reezy"
+    ],
+    "venue": "Baby's All Right",
+    "date": "10/12/2026",
+    "time": "01:30 AM"
   },
   {
     "artists": [
@@ -14191,7 +14115,7 @@
     ],
     "venue": "The Bell House",
     "date": "10/11/2026",
-    "time": "09:00 PM"
+    "time": "11:30 PM"
   },
   {
     "artists": [
@@ -14199,7 +14123,7 @@
     ],
     "venue": "The Bell House",
     "date": "10/11/2026",
-    "time": "11:30 PM"
+    "time": "09:00 PM"
   },
   {
     "artists": [
@@ -14852,19 +14776,19 @@
   },
   {
     "artists": [
-      "Chandler"
-    ],
-    "venue": "Mercury Lounge",
-    "date": "10/22/2026",
-    "time": "01:00 AM"
-  },
-  {
-    "artists": [
       "Elizabeth Nichols"
     ],
     "venue": "Mercury Lounge",
     "date": "10/21/2026",
     "time": "10:00 PM"
+  },
+  {
+    "artists": [
+      "Chandler"
+    ],
+    "venue": "Mercury Lounge",
+    "date": "10/22/2026",
+    "time": "01:00 AM"
   },
   {
     "artists": [
@@ -17339,16 +17263,16 @@
       "Jerry Seinfeld"
     ],
     "venue": "Beacon Theatre",
-    "date": "12/13/2026",
-    "time": "01:00 AM"
+    "date": "12/12/2026",
+    "time": "10:00 PM"
   },
   {
     "artists": [
       "Jerry Seinfeld"
     ],
     "venue": "Beacon Theatre",
-    "date": "12/12/2026",
-    "time": "10:00 PM"
+    "date": "12/13/2026",
+    "time": "01:00 AM"
   },
   {
     "artists": [
